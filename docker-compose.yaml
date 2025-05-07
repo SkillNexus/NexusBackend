@@ -1,0 +1,28 @@
+services:
+  mongodb-users:
+    image: mongo:latest
+    container_name: mongodb-users
+    restart: always
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: skillnexus
+      MONGO_INITDB_ROOT_PASSWORD: skillnexus_password
+      MONGO_INITDB_DATABASE: user_service_db
+    volumes:
+      - mongodb-users-data:/data/db
+    networks:
+      - skillnexus-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  mongodb-users-data:
+
+networks:
+  skillnexus-network:
+    driver: bridge

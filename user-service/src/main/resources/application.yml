@@ -1,0 +1,17 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://skillnexus:skillnexus_password@localhost:27018/user_service_db
+
+server:
+  port: 8081
+
+# Configuration pour le monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
