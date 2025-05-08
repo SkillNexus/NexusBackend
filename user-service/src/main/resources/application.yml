@@ -1,10 +1,27 @@
 spring:
+  application:
+    name: user-service
   data:
     mongodb:
-      uri: mongodb://skillnexus:skillnexus_password@localhost:27018/user_service_db
+      uri: mongodb://skillnexus:skillnexus_password@localhost:27018/admin
+      database: user_service_db
+  cloud:
+    discovery:
+      enabled: true
 
 server:
   port: 8081
+
+# Configuration pour Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
 # Configuration pour le monitoring
 management:
