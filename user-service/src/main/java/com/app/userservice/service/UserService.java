@@ -3,6 +3,9 @@ package com.app.userservice.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.app.userservice.model.InterestTag;
+import com.app.userservice.model.LearningObjective;
+import com.app.userservice.model.ProfileCompletionStatus;
 import com.app.userservice.model.UserProfile;
 
 /**
@@ -78,4 +81,37 @@ public interface UserService {
      * @return liste des utilisateurs correspondants
      */
     List<UserProfile> findUsersByInterest(String interestName);
+    
+    /**
+     * Met à jour les informations personnelles d'un utilisateur
+     * @param userId identifiant de l'utilisateur
+     * @param username nom d'utilisateur
+     * @param bio biographie
+     * @param profilePictureUrl URL de la photo de profil
+     * @return le profil utilisateur mis à jour
+     */
+    UserProfile updatePersonalInfo(String userId, String username, String bio, String profilePictureUrl);
+    
+    /**
+     * Met à jour les centres d'intérêt d'un utilisateur
+     * @param userId identifiant de l'utilisateur
+     * @param interests liste des centres d'intérêt
+     * @return le profil utilisateur mis à jour
+     */
+    UserProfile updateInterests(String userId, List<InterestTag> interests);
+    
+    /**
+     * Met à jour les objectifs d'apprentissage d'un utilisateur
+     * @param userId identifiant de l'utilisateur
+     * @param objectives liste des objectifs d'apprentissage
+     * @return le profil utilisateur mis à jour
+     */
+    UserProfile updateLearningObjectives(String userId, List<LearningObjective> objectives);
+    
+    /**
+     * Récupère le statut de complétion du profil d'un utilisateur
+     * @param userId identifiant de l'utilisateur
+     * @return le statut de complétion du profil
+     */
+    ProfileCompletionStatus getProfileCompletionStatus(String userId);
 }

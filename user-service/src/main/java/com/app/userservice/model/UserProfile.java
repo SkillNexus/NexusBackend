@@ -1,5 +1,10 @@
 package com.app.userservice.model;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -9,10 +14,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 @Document(collection = "users")
 public class UserProfile {
@@ -40,6 +41,9 @@ public class UserProfile {
 
     @LastModifiedDate
     private Date updatedAt;
+
+    // Statut de complétion du profil utilisateur
+    private ProfileCompletionStatus profileCompletionStatus = ProfileCompletionStatus.INITIAL;
 
     @DBRef
     private List<SkillTag> skills = new ArrayList<>();
@@ -134,6 +138,14 @@ public class UserProfile {
         this.updatedAt = updatedAt;
     }
 
+    public ProfileCompletionStatus getProfileCompletionStatus() {
+        return profileCompletionStatus;
+    }
+
+    public void setProfileCompletionStatus(ProfileCompletionStatus profileCompletionStatus) {
+        this.profileCompletionStatus = profileCompletionStatus;
+    }
+
     public List<SkillTag> getSkills() {
         return skills;
     }
@@ -222,6 +234,7 @@ public class UserProfile {
                 ", email='" + email + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", profileCompletionStatus=" + profileCompletionStatus +
                 '}';
     }
 }
