@@ -26,6 +26,12 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByEmail(userProfile.getEmail())) {
             throw new IllegalArgumentException("Un utilisateur avec cet email existe déjà");
         }
+        
+        // Vérifier si le nom d'utilisateur existe déjà
+        if (userRepository.existsByUsername(userProfile.getUsername())) {
+            throw new IllegalArgumentException("Ce nom d'utilisateur est déjà pris");
+        }
+        
         return userRepository.save(userProfile);
     }
 
@@ -43,6 +49,16 @@ public class UserServiceImpl implements UserService {
     public Optional<UserProfile> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+    
+    @Override
+    public Optional<UserProfile> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+    
+    @Override
+    public Optional<UserProfile> getUserByKeycloakId(String keycloakId) {
+        return userRepository.findByKeycloakId(keycloakId);
+    }
 
     @Override
     public UserProfile updateUser(String id, UserProfile userProfile) {
@@ -51,14 +67,28 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Utilisateur non trouvé avec l'ID: " + id);
         }
         
+        UserProfile currentUser = existingUser.get();
+        
         // Vérifier si l'email est modifié et s'il existe déjà pour un autre utilisateur
-        if (!existingUser.get().getEmail().equals(userProfile.getEmail()) && 
+        if (!currentUser.getEmail().equals(userProfile.getEmail()) && 
             userRepository.existsByEmail(userProfile.getEmail())) {
             throw new IllegalArgumentException("Un utilisateur avec cet email existe déjà");
         }
         
+        // Vérifier si le nom d'utilisateur est modifié et s'il existe déjà pour un autre utilisateur
+        if (!currentUser.getUsername().equals(userProfile.getUsername()) && 
+            userRepository.existsByUsername(userProfile.getUsername())) {
+            throw new IllegalArgumentException("Ce nom d'utilisateur est déjà pris");
+        }
+        
         // S'assurer que l'ID reste le même
         userProfile.setId(id);
+        
+        // Conserver le keycloakId si non spécifié dans la mise à jour
+        if (userProfile.getKeycloakId() == null) {
+            userProfile.setKeycloakId(currentUser.getKeycloakId());
+        }
+        
         return userRepository.save(userProfile);
     }
 
@@ -71,12 +101,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserProfile> findUsersBySkill(String skillTag) {
-        return userRepository.findBySkillTagsContaining(skillTag);
+    public List<UserProfile> findUsersBySkill(String skillName) {
+        return userRepository.findBySkillsName(skillName);
     }
 
     @Override
-    public List<UserProfile> findUsersByInterest(String interestTag) {
-        return userRepository.findByInterestTagsContaining(interestTag);
+    public List<UserProfile> findUsersByInterest(String interestName) {
+        return userRepository.findByInterestsName(interestName);
     }
 } 

@@ -38,6 +38,20 @@ public interface UserService {
     Optional<UserProfile> getUserByEmail(String email);
     
     /**
+     * Recherche un utilisateur par son nom d'utilisateur
+     * @param username nom d'utilisateur
+     * @return l'utilisateur trouvé (optionnel)
+     */
+    Optional<UserProfile> getUserByUsername(String username);
+    
+    /**
+     * Recherche un utilisateur par son identifiant Keycloak
+     * @param keycloakId identifiant Keycloak
+     * @return l'utilisateur trouvé (optionnel)
+     */
+    Optional<UserProfile> getUserByKeycloakId(String keycloakId);
+    
+    /**
      * Met à jour les informations d'un utilisateur
      * @param id identifiant de l'utilisateur
      * @param userProfile nouvelles informations
@@ -53,15 +67,15 @@ public interface UserService {
     
     /**
      * Trouve des utilisateurs par compétence
-     * @param skillTag tag de compétence
+     * @param skillName nom de la compétence
      * @return liste des utilisateurs correspondants
      */
-    List<UserProfile> findUsersBySkill(String skillTag);
+    List<UserProfile> findUsersBySkill(String skillName);
     
     /**
      * Trouve des utilisateurs par intérêt
-     * @param interestTag tag d'intérêt
+     * @param interestName nom de l'intérêt
      * @return liste des utilisateurs correspondants
      */
-    List<UserProfile> findUsersByInterest(String interestTag);
+    List<UserProfile> findUsersByInterest(String interestName);
 }
