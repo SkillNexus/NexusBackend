@@ -44,7 +44,7 @@ public class UserController {
      * @param userProfileDTO DTO contenant les informations de l'utilisateur
      * @return Une réponse contenant le DTO de l'utilisateur créé
      */
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<ApiResponse<UserProfileDTO>> createUser(@RequestBody UserProfileDTO userProfileDTO) {
         try {
             // Conversion du DTO vers le modèle
