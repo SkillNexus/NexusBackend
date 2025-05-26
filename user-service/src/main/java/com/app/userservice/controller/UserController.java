@@ -229,7 +229,7 @@ public ResponseEntity<ApiResponse<UserProfileDTO>> updatePersonalInfo(
         @RequestBody PersonalInfoDTO personalInfoDTO) {
     try {
         UserProfile updatedUser = userService.updatePersonalInfo(
-            userId, 
+            userId,
             personalInfoDTO.getUsername(), 
             personalInfoDTO.getBio(), 
             personalInfoDTO.getProfilePictureUrl()

@@ -1,8 +1,11 @@
 package com.app.apigateway.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+
 import reactor.core.publisher.Mono;
 
 
@@ -75,6 +78,40 @@ public class UserServiceClient {
                 .bodyToMono(String.class);
     }
 
-   
+    // Met à jour les informations personnelles d'un utilisateur
+    public Mono<String> updatePersonalInfo(String userId, PersonalInfoDTO personalInfoDTO) {
+        return webClient.put()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/users/profile/personal-info")
+                        .queryParam("userId", userId)
+                        .build())
+                .bodyValue(personalInfoDTO)
+                .retrieve()
+                .bodyToMono(String.class);
+    }
+
+    // Met à jour les centres d'intérêt d'un utilisateur
+    public Mono<String> updateInterests(String userId, List<InterestTagDTO> interestDTOs) {
+        return webClient.put()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/users/profile/interests")
+                        .queryParam("userId", userId)
+                        .build())
+                .bodyValue(interestDTOs)
+                .retrieve()
+                .bodyToMono(String.class);
+    }
+
+    // Met à jour les objectifs d'apprentissage d'un utilisateur
+    public Mono<String> updateLearningObjectives(String userId, List<LearningObjectiveDTO> objectiveDTOs) {
+        return webClient.put()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/users/profile/objectives")
+                        .queryParam("userId", userId)
+                        .build())
+                .bodyValue(objectiveDTOs)
+                .retrieve()
+                .bodyToMono(String.class);
+    }
 
 }
