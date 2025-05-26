@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserProfileDTO {
-    private String id;
+
     private String keycloakId;
     private String username;
     private String profilePictureUrl;
@@ -41,7 +41,6 @@ public class UserProfileDTO {
      */
     public static UserProfileDTO fromModel(com.app.userservice.model.UserProfile model) {
         UserProfileDTO dto = new UserProfileDTO();
-        dto.setId(model.getId());
         dto.setKeycloakId(model.getKeycloakId());
         dto.setUsername(model.getUsername());
         dto.setProfilePictureUrl(model.getProfilePictureUrl());
@@ -83,7 +82,6 @@ public class UserProfileDTO {
      */
     public com.app.userservice.model.UserProfile toModel() {
         com.app.userservice.model.UserProfile model = new com.app.userservice.model.UserProfile();
-        model.setId(this.id);
         model.setKeycloakId(this.keycloakId);
         model.setUsername(this.username);
         model.setProfilePictureUrl(this.profilePictureUrl);
